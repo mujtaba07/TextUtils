@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 
 export default function About() {
-
+const [btntext,setBtnText]= useState('Enable light mode')
 const [myStyle,setMyStyle]= useState(
     {
         color: "black",

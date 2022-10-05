@@ -2,36 +2,61 @@ import React from "react";
 import { useState } from "react";
 
 export default function TextForm(props) {
+
   const handleUpClick = () => {
+    if(text===''){
+    props.showAlert("Textarea is empty","warning")
+    }else{
     const newText = text.toUpperCase();
     setText(newText);
+    props.showAlert("Converted to Uppercase","success")
+    }
   };
+  
   const handleLoClick = () => {
+    if(text === ''){
+    props.showAlert("Textarea is empty","warning")
+    }else{
     const newText = text.toLowerCase();
     setText(newText);
+    props.showAlert("Converted to Lowercase","success")
+    }
   };
+
   const handleClearClick = () => {
-    const newText = "";
-    setText(newText);
+    if(text===''){
+    props.showAlert("Textarea is Empty","warning")
+    }else{
+      const newText = "";
+      setText(newText);
+      props.showAlert("cleared","success")
+    }
   };
+
   const handleOnChange = (event) => {
     setText(event.target.value);
   };
+
   //copy text
   const handleCopy = () => {
-    var text = document.getElementById('MyBox')
-    text.select();
-    navigator.clipboard.writeText(text.value)
+      var text = document.getElementById('MyBox')
+      text.select();
+      navigator.clipboard.writeText(text.value)
+      props.showAlert("Copied to clipboard","success") 
+  
   };
   //remove extra spaces
   const handleExtraSpaces = () =>{
-    let newText = text.split(/[ ]+/);
+    let newText = text.split(/[ ]+/); 
      setText(newText.join(" "))
+    props.showAlert("Removed extra spaces","success")
   }
 
   const firstLetterCapital=()=>{
     const newText =text.charAt(0).toUpperCase() + text.substring(1);
     setText(newText);
+    props.showAlert("Converted first letter capital","success")
+
   }
 
   const [text, setText] = useState('');
@@ -43,25 +68,25 @@ export default function TextForm(props) {
     <div className="container" style={{color:props.mode==='dark'?'white':'#042743'}}>
       <h1>{props.heading}</h1>
       <div className="mb-3" >
-        <textarea className="form-control" value={text} onChange={handleOnChange} 
-        style={{backgroundColor:props.mode==='dark'?'grey':'white',color:props.mode==='dark'?'#042743':'white'}}
+        <textarea  className="form-control" value={text} onChange={handleOnChange} 
+        style={{ backgroundColor:props.mode==='dark'?'beige':'dark',color:props.mode==='dark'?'dark':'#042743'}}
          id="MyBox" rows="8"></textarea>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleUpClick}>
+        <button className={`btn ${props.button} my-3 mx-2`} onClick={handleUpClick}>
           Convert to Uppercase
         </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleLoClick}>
+        <button className={`btn ${props.button} my-3 mx-2`} onClick={handleLoClick}>
           Convert to Lowercase
         </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleClearClick}>
+        <button className={`btn ${props.button} my-3 mx-2`} onClick={handleClearClick}>
           Clear Text
         </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleCopy}>
+        <button className={`btn ${props.button} my-3 mx-2`} onClick={handleCopy}>
           Copy Text
         </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleExtraSpaces}>
+        <button className={`btn ${props.button} my-3 mx-2`} onClick={handleExtraSpaces}>
           Remove extra spaces
         </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={firstLetterCapital}>
+        <button className={`btn ${props.button} my-3 mx-2`} onClick={firstLetterCapital}>
           First letter capital
         </button>
       </div>
